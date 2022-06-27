@@ -25,17 +25,22 @@ function App() {
     socket.emit("send_message", {message, room, name});
     };
   
-  useEffect(() => {
-    let temp = [...chat];
-    socket.on("receive_message", (data) => {
-      let name = data.name;
-      let message = data.message;
+    useEffect(() => {
+      let temp = [...chat];
+      socket.on("receive_message", (data) => {
+        
+        let chatEntry = `${data.name}: ${data.message}`
 
-      temp.push(`${name}: ${message}`);
-      setChat(temp);
-      setMessage('')
-    })
-  },[socket])
+        temp.push(chatEntry);
+        setChat(temp);
+        console.log("chat", chat);
+        setMessage('')
+      })
+    },[message])
+
+  const renderMessage = () => {
+    
+  } 
 
   return (
     <Grid item xs={12} md={6}

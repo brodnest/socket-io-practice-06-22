@@ -33,18 +33,9 @@ function App() {
 
       temp.push(`${name}: ${message}`);
       setChat(temp);
-      
-      console.log("chat:", chat);
-      console.log("temp:", temp);
       setMessage('')
     })
   },[socket])
-
-  const displayThread = () => {
-    return 
-    chat.map((chat) => <li key={chat}>{chat}</li>)
-      
-  }
 
   return (
     <Grid item xs={12} md={6}

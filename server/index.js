@@ -1,6 +1,3 @@
-// import express from 'express';
-// import { Server } from 'socket.io';
-
 const express = require('express');
 const { Server } = require('socket.io');
 const app = express();
@@ -19,17 +16,17 @@ const io = new Server(server, {
 io.on("connection", (socket) => {
     console.log(`User Connected: ${socket.id}`);
 
-
     socket.on("join_room", (data) => {
         socket.join(data);
     });
 
     socket.on ("send_message", (data) => {
-        socket.to(data.room).emit("receive_message", data);
-        socket.emit("receive_message", data);
+        io.sockets.in(data.room).emit("receive_message", data);
     })
+
 });
 
 server.listen(3001, () => {
-    console.log("Server is Running");
+    console.log("Server is Running on 3001");
 })
+

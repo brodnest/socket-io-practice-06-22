@@ -3,7 +3,6 @@ import { Typography, TextField, Button, Grid, Paper, Box,
    List, ListItem, ListItemText, Divider } from '@mui/material';
 import './App.css';
 import  io  from 'socket.io-client';
-import zIndex from '@mui/material/styles/zIndex';
 
 const socket = io.connect("http://localhost:3001")
 
@@ -16,7 +15,7 @@ function App() {
 
   const joinRoom = () => {
     if (room !== "") {
-      setChatHeader(`Hello ${name}, You're connected in room: ${room}`);
+      setChatHeader(`Hello ${name}, you're connected in room: ${room}`);
       socket.emit("join_room", room);
     }
   };
@@ -24,23 +23,18 @@ function App() {
   const sendMessage = () => {
     socket.emit("send_message", {message, room, name});
     };
-  
-    useEffect(() => {
-      let temp = [...chat];
-      socket.on("receive_message", (data) => {
-        
-        let chatEntry = `${data.name}: ${data.message}`
 
-        temp.push(chatEntry);
-        setChat(temp);
-        console.log("chat", chat);
-        setMessage('')
-      })
-    },[message])
-
-  const renderMessage = () => {
-    
-  } 
+  useEffect(() => {
+    let temp = [...chat];
+    socket.on("receive_message", (data) => {
+      
+      let chatEntry = `${data.name}: ${data.message}`
+      temp.push(chatEntry);
+      setChat(temp);
+      console.log("temp", temp);
+      setMessage('')
+    })
+  },[message])
 
   return (
     <Grid item xs={12} md={6}
